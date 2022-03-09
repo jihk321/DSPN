@@ -199,6 +199,10 @@ class MainClass(QMainWindow, from_class):
                     # self.error.append(str(pricetext))
                 else: return 
             self.edit_price.setText(str(price))
+            if type > 5 : # 부자재, 도어/창호
+                self.edit_price.clear()
+
+
         except Exception as ex: print(f"price함수에서 {ex}에러 발생")
 
     def calc(self): # TableWidget에 적기
@@ -266,16 +270,21 @@ class MainClass(QMainWindow, from_class):
 
     def errorcode(self):
         self.error.clear()
-        color_now = self.comboBox_Color.currentText()
-        top_now = float(self.edit_topcoil.text())
 
-        if color_now == "밤색" : self.edit_topcoil.setText(str(0.4))
-        if color_now == "포스맥원판" or color_now == "갈바" :
-           if top_now < 0.45 :  self.edit_topcoil.setText(str(0.45))
-        if color_now == "티타늄실버" :
-            if top_now < 0.5 : self.edit_topcoil.setText(str(0.5))
-        if color_now == "아연" :
-            if top_now < 1.0 : self.edit_topcoil.setText(str(1.0))
+        try:
+            color_now = self.comboBox_Color.currentText()
+            top_now = float(self.edit_topcoil.text())
+            if color_now == "밤색" : self.edit_topcoil.setText(str(0.4))
+            elif color_now == "포스맥원판" or color_now == "갈바" :
+                if top_now < 0.45 :  self.edit_topcoil.setText(str(0.45))
+            elif color_now == "티타늄실버" :
+                if top_now < 0.5 : self.edit_topcoil.setText(str(0.5))
+            elif color_now == "아연" :
+                if top_now < 1.0 : self.edit_topcoil.setText(str(1.0))
+
+        except Exception as ex: 
+            print(f"errorcode함수에서 {ex}에러 발생")
+            return False
 
         if self.edit_client.text() == '' : 
             self.error.append("거래처 미표기")
@@ -377,6 +386,10 @@ class MainClass(QMainWindow, from_class):
         self.edit_client.clear()
         self.edit_sales.clear()
         self.log.clear()
+
+    def showplan(self):
+        # SubWindow(self)
+        pass
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)

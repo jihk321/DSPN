@@ -1598,6 +1598,19 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;설명&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="Button_Plan">
+     <property name="geometry">
+      <rect>
+       <x>610</x>
+       <y>172</y>
+       <width>75</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>부자재도면</string>
+     </property>
+    </widget>
     <zorder>edit_product2</zorder>
     <zorder>comboBox_grade</zorder>
     <zorder>label_pannel</zorder>
@@ -1653,6 +1666,7 @@
     <zorder>doublesize</zorder>
     <zorder>checkBox_same</zorder>
     <zorder>label</zorder>
+    <zorder>Button_Plan</zorder>
    </widget>
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
@@ -1948,6 +1962,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>Button_Plan</sender>
+   <signal>clicked()</signal>
+   <receiver>First</receiver>
+   <slot>showplan()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>653</x>
+     <y>210</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>691</x>
+     <y>769</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>calc()</slot>
@@ -1963,5 +1993,6 @@
   <slot>samecolor()</slot>
   <slot>renaming()</slot>
   <slot>eazybuja()</slot>
+  <slot>showplan()</slot>
  </slots>
 </ui>
