@@ -192,9 +192,11 @@ class MainClass(QMainWindow, from_class):
                     elif self.C3.isChecked() : rate = 3
                     elif self.C4.isChecked() : rate = 4
                     else : rate = 0
-                    price,price1,price2,price3 = coilpricecalc(itemname,color,top,rate)
-                    pricetext = f"상판가격 :{price1} / 색상가격 : {price2} / 기타비용 :{price3} / 총 가격 : {price}"
-                    self.error.append(str(pricetext))
+                    if self.PF.isChecked() : itemname = itemname + "(PF)"
+                    # price,price1,price2,price3 = coilpricecalc(itemname,color,top,rate)
+                    price = coilpricecalc(itemname,color,top,0,0,rate)
+                    # pricetext = f"상판가격 :{price1} / 색상가격 : {price2} / 기타비용 :{price3} / 총 가격 : {price}"
+                    # self.error.append(str(pricetext))
                 else: return 
             self.edit_price.setText(str(price))
         except Exception as ex: print(f"price함수에서 {ex}에러 발생")
@@ -216,7 +218,7 @@ class MainClass(QMainWindow, from_class):
             if product == "메탈판넬": 
                 stardard = self.comboBox_metal.currentText()
                 length = float(length)
-                length = str(int(hundup(length)))
+                length = str(hundup(length))
             else : stardard = self.comboBox_stand.currentText()  #규격2
             if product == "벽체" :
                 if self.onecolor.isChecked(): color = "한면백색"
