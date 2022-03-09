@@ -359,7 +359,13 @@ class MainClass(QMainWindow, from_class):
 
     def renaming(self): 
         self.edit_price.clear()
+        door_type = ['방화문','창호','행거도어']
         item_name = self.edit_product2.text()
+        # print(type(item_name))
+        # if door_type in list(item_name) :
+        #     if self.comboBox_pannel.currentText() == '부자재':
+        #         # self.comboBox_pannel.setCurrentText('도어/창호')
+        #         print("부자재가 아님")
         item_name = renamebuja(item_name)
         self.edit_product2.setText(item_name)
         self.edit_length.setFocus() # 길이로 포커스 
