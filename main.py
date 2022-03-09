@@ -10,6 +10,7 @@ from counting import *
 from PannelCalc import *
 import pandas as pd
 from csv import writer
+from coils import *
 
 from_class = uic.loadUiType("dspncalc.ui")[0]
 
@@ -26,6 +27,7 @@ class MainClass(QMainWindow, from_class):
         self.price()
         
     def chagetype(self):
+        self.Color_Sort()
         type = ptype(self.comboBox_pannel.currentText())
         # print(type)
         if type == 0 :
@@ -115,12 +117,12 @@ class MainClass(QMainWindow, from_class):
         
 
     def Color_Sort(self):
-        type = ptype(self.comboBox_pannel.currentText())
-        if type ==  0 : self.AddColorItem("1040")
-        elif type == 1 or type == 2: self.AddColorItem("1219,1105")
-        elif type == 3 : self.AddColorItem("1105")
-        elif type == 4 : self.AddColorItem("1219")
-        elif type == 5 : self.AddColorItem("1219,1105,914,607,518,445")
+        self.comboBox_Color.clear()
+        # type = ptype(self.comboBox_pannel.currentText())
+        item_name = self.comboBox_pannel.currentText()
+        ccc = search_color(item_name)
+        for i in range(len(ccc)) :
+            self.comboBox_Color.addItem(ccc[i])
 
     def today(self):
         a = today()
@@ -195,7 +197,7 @@ class MainClass(QMainWindow, from_class):
                     self.error.append(str(pricetext))
                 else: return 
             self.edit_price.setText(str(price))
-        except: print("price 함수 에러")
+        except Exception as ex: print(f"price함수에서 {ex}에러 발생")
 
     def calc(self): # TableWidget에 적기
         if self.errorcode():

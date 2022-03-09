@@ -200,49 +200,29 @@ def hundup(num):  # 백의 자리에서 무조건 올림
 def clientrate(name, clientnum):
     pannel = CoilWidth_index[0:17]
     if name in pannel:
-        if clientnum == 0:
-            rate = 1.177
-        elif clientnum == 1:
-            rate = 1.2
-        elif clientnum == 2:
-            rate = 1.25
-        elif clientnum == 3:
-            rate = 1.28
-        elif clientnum == 4:
-            rate = 1.3
+        if clientnum == 0 : rate = 1.177
+        elif clientnum == 1 : rate = 1.2
+        elif clientnum == 2 : rate = 1.25
+        elif clientnum == 3 : rate = 1.28
+        elif clientnum == 4 : rate = 1.3
     elif name == '리얼징크445' or name == '리얼징크355':
-        if clientnum == 0:
-            rate = 1.15
-        elif clientnum == 1:
-            rate = 1.2
-        elif clientnum == 2:
-            rate = 1.28
-        elif clientnum == 3:
-            rate = 1.4
-        elif clientnum == 4:
-            rate = 1.55
+        if clientnum == 0 : rate = 1.15
+        elif clientnum == 1 : rate = 1.2
+        elif clientnum == 2 : rate = 1.28
+        elif clientnum == 3 : rate = 1.4
+        elif clientnum == 4 : rate = 1.55
     elif name == '팀버패널':
-        if clientnum == 0:
-            rate = 1.22
-        elif clientnum == 1:
-            rate = 1.45
-        elif clientnum == 2:
-            rate = 1.7
-        elif clientnum == 3:
-            rate = 1.85
-        elif clientnum == 4:
-            rate = 2
+        if clientnum == 0 : rate = 1.22
+        elif clientnum == 1 : rate = 1.45
+        elif clientnum == 2 : rate = 1.7
+        elif clientnum == 3 : rate = 1.85
+        elif clientnum == 4 : rate = 2
     else:
-        if clientnum == 0:
-            rate = 1.177
-        elif clientnum == 1:
-            rate = 1.25
-        elif clientnum == 2:
-            rate = 1.3
-        elif clientnum == 3:
-            rate = 1.35
-        elif clientnum == 4:
-            rate = 1.4
+        if clientnum == 0 : rate = 1.177
+        elif clientnum == 1 : rate = 1.25
+        elif clientnum == 2 : rate = 1.3
+        elif clientnum == 3 : rate = 1.35
+        elif clientnum == 4 : rate = 1.4
     return rate
 
 
@@ -296,22 +276,14 @@ def coilpricecalc(name, color, top, bot, board, rate):  # 품목명,색상,상�
 
 def ptype(name):
     Item_Type = 0  # 제품 분류  0 일반벽체, 1 지붕 , 2 외벽, 3 징크, 4 사이딩, 5 강판 , 6 부자재(상품), 7 부자재(제품), 8 도어/창호
-    if name == "벽체":
-        Item_Type = 0
-    elif name == "지붕" or name == "지붕330":
-        Item_Type = 1
-    elif name == "RP1" or name == "RP3" or name == "V-45(일반)" or name == "V-45(A)" or name == "V-70":
-        Item_Type = 2
-    elif name == "징크판넬" or name == "징크330" or name == "메탈판넬":
-        Item_Type = 3
-    elif name == "사이딩":
-        Item_Type = 4
-    elif name in type_5:
-        Item_Type = 5  # 강판
-    elif name == "부자재":
-        Item_Type = 6
-    elif name == "도어/창호":
-        Item_Type = 7
+    if name == "벽체" : Item_Type = 0
+    elif name == "지붕" or name == "지붕330" : Item_Type = 1
+    elif name == "RP1" or name == "RP3" or name == "V-45(일반)" or name == "V-45(A)" or name == "V-70" : Item_Type = 2
+    elif name == "징크판넬" or name == "징크330" or name == "메탈판넬" : Item_Type = 3
+    elif name == "사이딩" : Item_Type = 4
+    elif name in type_5 : Item_Type = 5  # 강판
+    elif name == "부자재" : Item_Type = 6
+    elif name == "도어/창호" : Item_Type = 7
     # print(name,"타입",type)
     return Item_Type
 
@@ -358,7 +330,7 @@ def pcalc(type, grade, size):
 
 def itemtype(name):
     itemtype_1 = ["벽체", "지붕", "지붕330", "RP1", "RP3", "V-45(일반)", "V-45(A)", " V-70", "징크판넬", "징크330", "메탈판넬", "사이딩",
-                  "V250", "V115", "OL250", "OL330", "강판", "부자재"]  # 상품
+                  "V250", "V115", "OL250", "OL330", "강판", "부자재"]  # 제품
     sang = ['실리콘', '일자캡', '볼트', '지붕캡', 'PVC까치발', '까치발볼트', '방화문', '창호', '행거도어', '도어/창호']
     if name in itemtype_1: item = "제품"
     elif name in sang: item = "상품"
