@@ -254,6 +254,7 @@ class MainClass(QMainWindow, from_class):
             self.edit_length.clear()
             self.edit_number.clear()
             self.edit_product2.clear()
+        self.totallist()
             
 
     def wlog(self,sort,items,product,size,product2,color,topmm,bomm,grade,stardard,length,numbers,etc,clientnum,price): # 로그에 항목 입력
@@ -413,8 +414,21 @@ class MainClass(QMainWindow, from_class):
             # # self.setLayout(box)
             # # self.show()
 
-            recom = Recommed(input_data)
+            # recom = Recommed(input_data)
         except Exception as ex: print(f"find_client함수에서 {ex}에러 발생")
+    
+    def totallist(self):
+        global logx
+        item_index = [2,3,5,6,10,11] #품목,상세품목,규격,상판,길이,갯수
+        total = pd.DataFrame(columns=['품목','사이즈','색상','코일사이즈','길이','갯수'])
+
+        for i in range(0,logx,1):
+            mt = [] #딕셔너리
+            for k in item_index:
+                items = self.log.item(i,k).text()
+                mt.append(items) 
+            total.loc[i] = mt
+        pprint(total)
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
