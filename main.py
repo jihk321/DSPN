@@ -5,7 +5,7 @@ import sys
 from tkinter import OFF
 from typing import Type
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QCompleter, QVBoxLayout, QWidget
 from counting import *
 from PannelCalc import *
 import pandas as pd
@@ -397,8 +397,23 @@ class MainClass(QMainWindow, from_class):
     def showplan(self):
         # SubWindow(self)
         pass
+    
+    def find_client(self):
+        try:
+            input_data = self.edit_client.text() # 현재 입력한 텍스트 값 가져오기
+            recom = FindingClient(input_data) # 추천 검색어
+
+            completer = QCompleter(recom) 
+            self.edit_client.setCompleter(completer)
+
+            box = QVBoxLayout()
+            box.addWidget(self.edit_client)
+            # self.setLayout(box)
+            # self.show()
+        except Exception as ex: print(f"find_client함수에서 {ex}에러 발생")
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
     window = MainClass()
     app.exec_()
+

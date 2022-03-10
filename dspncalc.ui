@@ -1932,8 +1932,8 @@
    <slot>samecolor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>254</x>
-     <y>313</y>
+     <x>330</x>
+     <y>326</y>
     </hint>
     <hint type="destinationlabel">
      <x>269</x>
@@ -1989,6 +1989,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>edit_client</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>First</receiver>
+   <slot>find_client()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>148</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>348</x>
+     <y>677</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>calc()</slot>
@@ -2005,5 +2021,6 @@
   <slot>renaming()</slot>
   <slot>eazybuja()</slot>
   <slot>showplan()</slot>
+  <slot>find_client()</slot>
  </slots>
 </ui>

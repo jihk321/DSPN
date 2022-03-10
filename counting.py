@@ -42,12 +42,23 @@ def excelling(num, name, data):
 # excelling()
 def FindingClient(find_name): #거래처 찾기
     # with open("client.csv","r",encoding= 'utf-8-sig') as files:
-    files = pd.read_csv("client.csv", sep=",",low_memory=False)
+    files = pd.read_csv("client.csv",header=0,sep=",",low_memory=False)
     # files.dropna(inplace = True) # 빈값 버리기
-    files = (files['거래처명'].str.find("태정") == 0)
-    
-    # files['indexes'] = files["거래처명"].str.find(find_name)
-    # find_ok = data.str.find(find_name)
-    print(files)
+    search_num = (files['거래처명'].str.find(find_name))
+    a = search_num.index.tolist
 
-# FindingClient("")
+    index_num = []
+
+    for i in range(0,8205,1) : 
+        if search_num[i] == 0 :
+            index_num.append(i)
+
+    search_name = []
+
+    for i in index_num[0:10] :
+        id = files.loc[i][1]
+        search_name.append(id)
+
+    return search_name
+
+# FindingClient("ㅇㄹㅇㄹ")
