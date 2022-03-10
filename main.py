@@ -11,6 +11,7 @@ from PannelCalc import *
 import pandas as pd
 from csv import writer
 from coils import *
+from subplan import *
 
 from_class = uic.loadUiType("dspncalc.ui")[0]
 
@@ -395,21 +396,24 @@ class MainClass(QMainWindow, from_class):
         self.log.clear()
 
     def showplan(self):
-        # SubWindow(self)
-        pass
+        sub = SubWindow()
+        # sub.show()
+        
     
     def find_client(self):
         try:
             input_data = self.edit_client.text() # 현재 입력한 텍스트 값 가져오기
-            recom = FindingClient(input_data) # 추천 검색어
+            # recom = FindingClient(input_data) # 추천 검색어
 
-            completer = QCompleter(recom) 
-            self.edit_client.setCompleter(completer)
+            # completer = QCompleter(recom) 
+            # self.edit_client.setCompleter(completer)
+    
+            # box = QVBoxLayout()
+            # box.addWidget(self.edit_client)
+            # # self.setLayout(box)
+            # # self.show()
 
-            box = QVBoxLayout()
-            box.addWidget(self.edit_client)
-            # self.setLayout(box)
-            # self.show()
+            recom = Recommed(input_data)
         except Exception as ex: print(f"find_client함수에서 {ex}에러 발생")
 
 if __name__ == "__main__" :
