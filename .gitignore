@@ -1,0 +1,12 @@
+subplan.py
+subplan.ui
+
+#파이썬 실행관련 파일 
+__pycache__/ 
+
+#백업파일 제외
+dspncalc_backup.ui
+
+#엑셀관련파일
+매출정보.csv
+*.xlsx

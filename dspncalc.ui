@@ -859,7 +859,7 @@
       <number>14</number>
      </property>
      <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
+      <set>QAbstractItemView::AllEditTriggers</set>
      </property>
      <property name="defaultDropAction">
       <enum>Qt::CopyAction</enum>
@@ -1575,8 +1575,8 @@
     <widget class="QCheckBox" name="checkBox_same">
      <property name="geometry">
       <rect>
-       <x>222</x>
-       <y>285</y>
+       <x>330</x>
+       <y>290</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -1585,17 +1585,17 @@
       <string>동일색상</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="sort_item">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>290</y>
-       <width>201</width>
+       <x>210</x>
+       <y>286</y>
+       <width>121</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;설명&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>설명</string>
      </property>
     </widget>
     <widget class="QPushButton" name="Button_Plan">
@@ -1609,6 +1609,16 @@
      </property>
      <property name="text">
       <string>부자재도면</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBox_sort">
+     <property name="geometry">
+      <rect>
+       <x>122</x>
+       <y>284</y>
+       <width>76</width>
+       <height>22</height>
+      </rect>
      </property>
     </widget>
     <zorder>edit_product2</zorder>
@@ -1665,8 +1675,9 @@
     <zorder>comboBox_metal</zorder>
     <zorder>doublesize</zorder>
     <zorder>checkBox_same</zorder>
-    <zorder>label</zorder>
+    <zorder>sort_item</zorder>
     <zorder>Button_Plan</zorder>
+    <zorder>comboBox_sort</zorder>
    </widget>
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
