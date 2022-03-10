@@ -1,3 +1,4 @@
+from pprint import pprint
 from tkinter import Y
 import pandas as pd
 
@@ -51,16 +52,19 @@ def search_color(product_name): #제품명으로 검색
 def doorsize(size_x,size_y):
     x,y = int(size_x),int(size_y)
 
-    회배 = int((x * y)/1000000) 
+    # for x,y in 
+    회배 = ((x * y)/1000000) 
     마감바 = ((x-200)+ (y-100)+ (y-100)) /1000  
     C트랙 = ((x * 2) + 300)/1000
     가이드바 = (y/1000) 
     양개바 = (y/1000)
     편개바 = (size_y + size_y + size_x)/1000
-    data = {"회배" : 회배, "마감바" : 마감바, "C트랙": C트랙, "가이드바": 가이드바, "양개바" :양개바, "편개바" :편개바}
-    # print(data)
-    # df = pd.DataFrame(columns={"회배","마감바","C트랙","가이드바","양개바","편개바"})
-    df = pd.DataFrame(data, index= ['4'], columns={"마감바","C트랙","가이드바","양개바","편개바"})
-    # df.append(data,ignore_index=True)
+    d_index = [회배]
+    data = {"마감바" : 마감바, "C트랙": C트랙, "가이드바": 가이드바, "양개바" :양개바, "편개바" :편개바}
+
+    df = pd.DataFrame(data,index=[회배], columns={"마감바","C트랙","가이드바","양개바","편개바"})
+    # df = pd.DataFrame(data)
+    
     print(df.T)
-doorsize(2000,2000)
+# doorsize(3400,3400)
+

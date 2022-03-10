@@ -320,6 +320,7 @@ class MainClass(QMainWindow, from_class):
         self.error.append("엑셀 저장 완료")   
         # print(aemp[1]) 
 
+
     def Option(self):
         if self.doublesize.isChecked() == True : 
             self.chagecoil(0.5,0.5)
@@ -350,7 +351,7 @@ class MainClass(QMainWindow, from_class):
         # write_content.append(order_number)
         # write_content.append(client_name)
         print(write_content)
-        with open('주문번호.csv','a', encoding= 'utf-8-sig',newline='') as f_object:
+        with open('매출정보.csv','a', encoding= 'utf-8-sig',newline='') as f_object:
             writer_object = writer(f_object)
             writer_object.writerow(write_content)
             f_object.close()

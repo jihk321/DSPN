@@ -1,6 +1,7 @@
 from ast import While
 from datetime import date, datetime
 from glob import glob
+from pprint import pprint
 from PyQt5 import QtCore, QtGui, QtWidgets
 import openpyxl
 import pandas as pd
@@ -39,12 +40,14 @@ def excelling(num, name, data):
 
 
 # excelling()
-def FindingClient(): #거래처 찾기
-    files = pd.read_csv("client.csv", sep=",")
-    code,leng =[],[]
-    for c,n in files.iterrows():
-        code.append(n)
-    files.row
-    # print(leng)    
-    # print(code[0][1]) 
+def FindingClient(find_name): #거래처 찾기
+    # with open("client.csv","r",encoding= 'utf-8-sig') as files:
+    files = pd.read_csv("client.csv", sep=",",low_memory=False)
+    # files.dropna(inplace = True) # 빈값 버리기
+    files = (files['거래처명'].str.find("태정") == 0)
+    
+    # files['indexes'] = files["거래처명"].str.find(find_name)
+    # find_ok = data.str.find(find_name)
+    print(files)
 
+# FindingClient("")
