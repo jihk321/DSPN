@@ -7,6 +7,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import openpyxl
 import pandas as pd
 import PannelCalc
+import main 
 from csv import writer
 import os.path
 
@@ -71,4 +72,14 @@ def FindingClient(find_name): #거래처 찾기
         # print(f"{end - start:.5f} sec")
         return search_name[0:5]
 
-FindingClient("주식")
+# FindingClient("주식")
+
+def findbuja(find_name,color): #부자재 찾기
+    files = pd.read_csv("부자재.csv", sep=",", low_memory=False)
+    search_num = files[files['품목'].str.contains(find_name,na=False)]
+        
+    search_name = search_num[search_num['규격'].str.contains(color,na=False)]
+    re_name = search_name['규격'].values
+    return re_name[0:5]
+
+# findbuja("2단후레슁","링클브라운")

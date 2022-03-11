@@ -2005,6 +2005,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>edit_length</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>First</receiver>
+   <slot>find_buja()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>285</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>234</x>
+     <y>783</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>calc()</slot>
@@ -2022,5 +2038,6 @@
   <slot>eazybuja()</slot>
   <slot>showplan()</slot>
   <slot>find_client()</slot>
+  <slot>find_buja()</slot>
  </slots>
 </ui>

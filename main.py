@@ -158,7 +158,7 @@ class MainClass(QMainWindow, from_class):
             self.errorcode()
             itemname = self.comboBox_pannel.currentText()#상품 종류
             color = self.comboBox_Color.currentText() # 색깔
-            price1,price2,price4 = 0,0,0 #price 1 거래처 별 단가 차등 price2 양면 05T price4 추가 옵션 
+            price,price1,price2,price4 = 0,0,0,0 #price 1 거래처 별 단가 차등 price2 양면 05T price4 추가 옵션 
             type = ptype(itemname)
             if type < 5 :
                 grade = self.comboBox_grade.currentIndex()#단열제 종류
@@ -204,7 +204,9 @@ class MainClass(QMainWindow, from_class):
                 self.edit_price.clear()
 
 
-        except Exception as ex: print(f"price함수에서 {ex}에러 발생")
+        except Exception as ex: 
+            print(f"price함수에서 {ex}에러 발생")
+            self.edit_price.clear()
 
     def calc(self): # TableWidget에 적기
         if self.errorcode():
@@ -377,8 +379,8 @@ class MainClass(QMainWindow, from_class):
         #         print("부자재가 아님")
         item_name = renamebuja(item_name)
         self.edit_product2.setText(item_name)
-        if no_length in item_name : self.edit_number.setFocus() # 갯수로 포커스 
-        else : self.edit_length.setFocus() # 길이로 포커스 
+        # if no_length in item_name : self.edit_number.setFocus() # 갯수로 포커스 
+        # else : self.edit_length.setFocus() # 길이로 포커스 
 
     def samecolor(self): #추천색상(T수) 체크박스
         color = self.comboBox_sort.currentText()
@@ -420,6 +422,19 @@ class MainClass(QMainWindow, from_class):
             # self.show()
             # recom = Recommed(input_data)
         except Exception as ex: print(f"find_client함수에서 {ex}에러 발생")
+
+    def find_buja(self):
+        type = ptype(self.comboBox_pannel.currentText())
+        if type == 6 :
+            try:
+                input_data = self.edit_product2.text() # 현재 입력한 텍스트 값 가져오기
+                color = self.edit_length.text()
+                recom_buja = findbuja(input_data,color) # 추천 검색어
+                print(recom_buja)
+                completer_buja = QCompleter(recom_buja,self) #
+                self.edit_length.setCompleter(completer_buja)
+
+            except Exception as ex: print(f"find_buja함수에서 {ex}에러 발생")
     
     def totallist(self):
         global logx
@@ -478,6 +493,11 @@ class MainClass(QMainWindow, from_class):
             self.wlog(sort,"상품","부자재","","까치발볼트",size,"","","","","",bolt_num,"너트.와샤포함",clientnum,"")
         elif bolt == 1: #볼트가 있을때
             self.log.setItem(bolt_index,11,QtWidgets.QTableWidgetItem(str(bolt_num)))
+    
+
+
+
+
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
