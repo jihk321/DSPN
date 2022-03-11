@@ -251,6 +251,9 @@ class MainClass(QMainWindow, from_class):
                 items = itemtype(product2) #상품구분 
                 self.wlog(sort,items,product,"",product2,length,"",'','',stardard,'',numbers,etc,clientnum,price)
                 self.edit_product2.setFocus()
+                if product2 == "PVC까치발" or product2 == "캐노피삼각대" :
+                    self.ggachibolt(sort,clientnum)
+                    
             self.edit_length.clear()
             self.edit_number.clear()
             self.edit_product2.clear()
@@ -272,21 +275,23 @@ class MainClass(QMainWindow, from_class):
 
     def errorcode(self):
         self.error.clear()
-
+        itemname = self.comboBox_pannel.currentText()
+        item_type = ptype(itemname)
         try:
-            color_now = self.comboBox_Color.currentText()
-            top_now = float(self.edit_topcoil.text())
-            if color_now == "밤색" : self.edit_topcoil.setText(str(0.4))
-            elif color_now == "포스맥원판" or color_now == "갈바" :
-                if top_now < 0.45 :  self.edit_topcoil.setText(str(0.45))
-            elif color_now == "티타늄실버" :
-                if top_now < 0.5 : self.edit_topcoil.setText(str(0.5))
-            elif color_now == "아연" :
-                if top_now < 1.0 : self.edit_topcoil.setText(str(1.0))
+            if item_type <= 5:
+                color_now = self.comboBox_Color.currentText()
+                top_now = float(self.edit_topcoil.text())
+                if color_now == "밤색" : self.edit_topcoil.setText(str(0.4))
+                elif color_now == "포스맥원판" or color_now == "갈바" :
+                    if top_now < 0.45 :  self.edit_topcoil.setText(str(0.45))
+                elif color_now == "티타늄실버" :
+                    if top_now < 0.5 : self.edit_topcoil.setText(str(0.5))
+                elif color_now == "아연" :
+                    if top_now < 1.0 : self.edit_topcoil.setText(str(1.0))
 
         except Exception as ex: 
             print(f"errorcode함수에서 {ex}에러 발생")
-            return False
+            return True
 
         if self.edit_client.text() == '' : 
             self.error.append("거래처 미표기")
@@ -419,16 +424,44 @@ class MainClass(QMainWindow, from_class):
     
     def totallist(self):
         global logx
-        item_index = [2,3,5,6,10,11] #품목,상세품목,규격,상판,길이,갯수
-        total = pd.DataFrame(columns=['품목','사이즈','색상','코일사이즈','길이','갯수'])
+        item_index = [2,3,5,6] #품목,상세품목,규격,상판,길이,갯수
+        # total = pd.DataFrame(columns=['품목','사이즈','색상','코일(T)','길이','갯수'])
+        total = pd.DataFrame(columns=['품목','사이즈','색상','코일(T)','회배'])
 
         for i in range(0,logx,1):
             mt = [] #딕셔너리
             for k in item_index:
                 items = self.log.item(i,k).text()
                 mt.append(items) 
+            length = float(self.log.item(i,10).text())
+            number = float(self.log.item(i,11).text())
+            meter = (length/1000)*number # 회배 구하기
+            mt.append(meter)
             total.loc[i] = mt
-        pprint(total)
+        total_group = total.groupby(['품목','사이즈','색상','코일(T)'])['회배'].sum()
+        pprint(total_group)
+
+    
+    def ggachibolt(self,sort,clientnum):
+        global logx
+        bolt,bolt_num,bolt_index = 0,0,0
+        for i in range(0,logx,1):
+            isbolt = self.log.item(i,4).text()
+            if isbolt == "까치발볼트" :
+                bolt,bolt_index = 1,i
+            elif isbolt == "PVC까치발" or isbolt == "캐노피삼각대" :
+                a = self.log.item(i,11).text()
+                bolt_num = bolt_num + 2*(int(a))
+        if bolt == 0 : # 볼트가 없을때
+            print(bolt_num)
+            size = "100T"
+            self.wlog(sort,"상품","부자재","","까치발볼트",size,"","","","","",bolt_num,"너트.와샤포함",clientnum,"")
+        elif bolt == 1: #볼트가 있을때
+            pass
+        # sort = self.comboBox_type.currentText()
+        # color = 0
+        numbers = 0
+        # self.wlog(sort,"상품","부자재","","PVC까치발",color,"","","","","",numbers,"",clientnum,"")
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
