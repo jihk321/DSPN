@@ -242,11 +242,13 @@ class MainClass(QMainWindow, from_class):
             if itemnum < 5 : 
                 self.wlog(sort,items,product,size,product2,color,topmm,bomm,grade,stardard,length,numbers,etc,clientnum,price)
                 self.edit_length.setFocus()
+                self.totallist()
             if itemnum == 5:
                 if self.PF.isChecked() : product = product + "(PF)"
                 elif self.PF_2.isChecked() : product = product + "(PC)"
                 self.wlog(sort,items,"강판",product,product2,color,topmm,bomm,bomm,stardard,length,numbers,etc,clientnum,price)
                 self.edit_length.setFocus()
+                self.totallist()
             if itemnum > 5 : #부자재 , 도어/창호 
                 items = itemtype(product2) #상품구분 
                 self.wlog(sort,items,product,"",product2,length,"",'','',stardard,'',numbers,etc,clientnum,price)
@@ -256,9 +258,7 @@ class MainClass(QMainWindow, from_class):
                     
             self.edit_length.clear()
             self.edit_number.clear()
-            self.edit_product2.clear()
-        self.totallist()
-            
+            self.edit_product2.clear()            
 
     def wlog(self,sort,items,product,size,product2,color,topmm,bomm,grade,stardard,length,numbers,etc,clientnum,price): # 로그에 항목 입력
         global logx,logy
@@ -427,8 +427,15 @@ class MainClass(QMainWindow, from_class):
         item_index = [2,3,5,6] #품목,상세품목,규격,상판,길이,갯수
         # total = pd.DataFrame(columns=['품목','사이즈','색상','코일(T)','길이','갯수'])
         total = pd.DataFrame(columns=['품목','사이즈','색상','코일(T)','회배'])
+        
+        item_type = []
 
-        for i in range(0,logx,1):
+        for s in range(0,logx,1) :
+            type = ptype(self.log.item(s,2).text())  # 판넬~벽체있는 항목 인덱스 찾기
+            if type <= 5 :
+                item_type.append(s)
+
+        for i in item_type :
             mt = [] #딕셔너리
             for k in item_index:
                 items = self.log.item(i,k).text()
@@ -438,8 +445,22 @@ class MainClass(QMainWindow, from_class):
             meter = (length/1000)*number # 회배 구하기
             mt.append(meter)
             total.loc[i] = mt
-        total_group = total.groupby(['품목','사이즈','색상','코일(T)'])['회배'].sum()
-        pprint(total_group)
+        total_group = total.groupby(['품목','사이즈','색상','코일(T)'])  # 같은 항목 그룹화
+        total_sum = total_group['회배'].sum() # 같은 항목 회배수 합
+        total_df = total_sum.reset_index() # 합계를 데이터프레임화 
+        
+        total_num = len(total_df.index)
+        total_color,total_coil = "",""
+        
+        self.comboBox_sort.clear()
+        for num in range(0,total_num,1) :
+            # total_color.append(total_df['색상'][num])
+            total_color = str(total_df['색상'][num])
+            total_coil = str(total_df['코일(T)'][num])
+            if total_coil == "0.35": self.comboBox_sort.addItem(total_color)
+            elif total_coil == "0.37" or total_coil == "0.4" : self.comboBox_sort.addItem(total_color+"040")
+            elif total_coil == "0.45" : self.comboBox_sort.addItem(total_color+"045")
+            elif total_coil == "0.5" : self.comboBox_sort.addItem(total_color+"050")
 
     
     def ggachibolt(self,sort,clientnum):
@@ -454,14 +475,10 @@ class MainClass(QMainWindow, from_class):
                 bolt_num = bolt_num + 2*(int(a))
         if bolt == 0 : # 볼트가 없을때
             print(bolt_num)
-            size = "100T"
+            size = "벽체 T수"
             self.wlog(sort,"상품","부자재","","까치발볼트",size,"","","","","",bolt_num,"너트.와샤포함",clientnum,"")
         elif bolt == 1: #볼트가 있을때
-            pass
-        # sort = self.comboBox_type.currentText()
-        # color = 0
-        numbers = 0
-        # self.wlog(sort,"상품","부자재","","PVC까치발",color,"","","","","",numbers,"",clientnum,"")
+            self.log.setItem(bolt_index,11,QtWidgets.QTableWidgetItem(str(bolt_num)))
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
