@@ -368,6 +368,7 @@ class MainClass(QMainWindow, from_class):
     def renaming(self): 
         self.edit_price.clear()
         door_type = ['방화문','창호','행거도어']
+        no_length =['PVC까치발','캐노피삼각대']
         item_name = self.edit_product2.text()
         # print(type(item_name))
         # if door_type in list(item_name) :
@@ -376,10 +377,11 @@ class MainClass(QMainWindow, from_class):
         #         print("부자재가 아님")
         item_name = renamebuja(item_name)
         self.edit_product2.setText(item_name)
-        self.edit_length.setFocus() # 길이로 포커스 
+        if no_length in item_name : self.edit_number.setFocus() # 갯수로 포커스 
+        else : self.edit_length.setFocus() # 길이로 포커스 
 
-    def samecolor(self): #동일색상 체크박스
-        color = self.comboBox_Color.currentText()
+    def samecolor(self): #추천색상(T수) 체크박스
+        color = self.comboBox_sort.currentText()
         color = "*"+ color
         self.edit_length.insert(color)
         self.checkBox_same.setChecked(False)
