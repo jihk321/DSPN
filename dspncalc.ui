@@ -859,7 +859,7 @@
       <number>14</number>
      </property>
      <property name="editTriggers">
-      <set>QAbstractItemView::AllEditTriggers</set>
+      <set>QAbstractItemView::DoubleClicked</set>
      </property>
      <property name="defaultDropAction">
       <enum>Qt::CopyAction</enum>
@@ -1263,7 +1263,7 @@
       </rect>
      </property>
      <property name="text">
-      <string/>
+      <string> </string>
      </property>
     </widget>
     <widget class="QGroupBox" name="wall_option">
@@ -1614,9 +1614,9 @@
     <widget class="QComboBox" name="comboBox_sort">
      <property name="geometry">
       <rect>
-       <x>122</x>
+       <x>67</x>
        <y>284</y>
-       <width>76</width>
+       <width>131</width>
        <height>22</height>
       </rect>
      </property>

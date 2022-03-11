@@ -23,20 +23,21 @@ class Recommed(QWidget):
         box.addWidget(self.lineEdit)
         self.setLayout(box)
         self.show()
+
+
+# form_second = uic.loadUiType("subplan.ui")[0]
+
+# class SubWindow(QDialog,form_second):
+
+#     def __init__(self) :
+#         super(SubWindow, self).__init__()
+#         self.initUI()
+
+#     def initUI(self) :
+#         self.setupUi(self)
+#         self.show()
         
-form_second = uic.loadUiType("subplan.ui")[0]
-
-class SubWindow(QDialog,form_second):
-
-    def __init__(self) :
-        super(SubWindow, self).__init__()
-        self.initUI()
-
-    def initUI(self) :
-        self.setupUi(self)
-        self.show()
-        
-if __name__ == "__main__" :
-    app = QApplication(sys.argv)
-    ss = SubWindow()
-    app.exec_()
+# if __name__ == "__main__" :
+#     app = QApplication(sys.argv)
+#     ss = SubWindow()
+#     app.exec_()

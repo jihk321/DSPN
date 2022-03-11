@@ -2,6 +2,7 @@ from ast import While
 from datetime import date, datetime
 from glob import glob
 from pprint import pprint
+import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 import openpyxl
 import pandas as pd
@@ -41,24 +42,33 @@ def excelling(num, name, data):
 
 # excelling()
 def FindingClient(find_name): #거래처 찾기
-    # with open("client.csv","r",encoding= 'utf-8-sig') as files:
-    files = pd.read_csv("client.csv",header=0,sep=",",low_memory=False)
-    # files.dropna(inplace = True) # 빈값 버리기
-    search_num = (files['거래처명'].str.find(find_name))
-    a = search_num.index.tolist
+    if len(find_name) > 1:
+        # start = time.time()
+        # with open("client.csv","r",encoding= 'utf-8-sig') as files:
+        files = pd.read_csv("client.csv",header=0,sep=",",low_memory=False)
+        # files.dropna(inplace = True) # 빈값 버리기
+        # search_num = (files['거래처명'].str.find(find_name))
+        search_num = files[files['거래처명'].str.contains(find_name,na=False)]
+        a = search_num.index.tolist
+        
+        search_name = search_num['거래처명'].values
 
-    index_num = []
+        index_num = []
 
-    for i in range(0,8205,1) : 
-        if search_num[i] == 0 :
-            index_num.append(i)
+        # for i in range(0,8205,1) : 
+        #     if search_num[i] == True :
+        #         index_num.append(i)
 
-    search_name = []
+        # search_name = []
 
-    for i in index_num[0:10] :
-        id = files.loc[i][1]
-        search_name.append(id)
+        # for i in index_num[0:5] :
+        #     id = files.loc[i][1]
+        #     search_name.append(id)
 
-    return search_name
+        # search_name = search_name[0:5]
+        # print(search_name[0:5])
+        # end = time.time()
+        # print(f"{end - start:.5f} sec")
+        return search_name[0:5]
 
-# FindingClient("ㅇㄹㅇㄹ")
+FindingClient("주식")
