@@ -1,5 +1,6 @@
 #파이썬 실행관련 파일 
 __pycache__/ 
+서류파일/
 
 #백업파일 제외
 dspncalc_backup.ui
