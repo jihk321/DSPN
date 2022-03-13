@@ -6,6 +6,8 @@ import sys
 # from typing import Type
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QCompleter, QVBoxLayout, QWidget
+from PyQt5.QtGui import QPainter, QColor, QFont, QPen, QBrush, QPainterPath
+from PyQt5.QtCore import Qt
 from counting import *
 from PannelCalc import *
 import pandas as pd
@@ -21,11 +23,41 @@ class SubWindow(QDialog,form_second):
     def __init__(self,parent) :
         super(SubWindow, self).__init__(parent)
         self.initUI()
+        self.past_x = None
+        self.past_y = None
+        
+        self.present_x = None
+        self.present_y = None
 
     def initUI(self) :
         self.setupUi(self)
         self.show()
+
+    def mouseMoveEvent(self,event):
+    # event.x(),y() : 마우스의 절대좌표 값
+        self.draw_Line(event.x(),event.y())
+        print(str(event.x()),str(event.y()))
         
+    # 마우스 릴리즈 이벤트
+    def mouseReleaseEvent(self,event):
+    	# event.x(),y() : 마우스의 절대좌표 값
+        self.draw_Line(event.x(),event.y())
+        self.past_x = None
+        self.past_y = None
+
+    def draw_Line(self,x,y):
+        if self.past_x is None:
+            self.past_x = x
+            self.past_y = y
+        else:
+            self.present_x = x
+            self.present_y = y
+
+            painter = QtGui.QPainter(self)
+            painter.setPen(QColor(0,0,0))
+            painter.drawLine(self.past_x,self.past_y,self.present_x,self.present_y)
+            painter.end
+            # self.screen.setPixmap(QtGui.QPixmap(self.graphicsView))
 
 class MainClass(QMainWindow, from_class):
     def __init__(self):
@@ -450,17 +482,18 @@ class MainClass(QMainWindow, from_class):
         except Exception as ex: print(f"find_client함수에서 {ex}에러 발생")
 
     def find_buja(self):
-        type = ptype(self.comboBox_pannel.currentText())
-        if type == 6 :
-            try:
+        try:
+            type = ptype(self.comboBox_pannel.currentText())
+            if type == 6 :
+                self.error.clear()
                 input_data = self.edit_product2.text() # 현재 입력한 텍스트 값 가져오기
                 color = self.edit_length.text()
-                recom_buja = findbuja(input_data,color) # 추천 검색어
-                print(recom_buja)
-                completer_buja = QCompleter(recom_buja,self) #
-                self.edit_length.setCompleter(completer_buja)
-                
-            except Exception as ex: print(f"find_buja함수에서 {ex}에러 발생")
+                recom = findbuja(input_data,color) # 추천 검색어
+                self.error.append(str(recom))
+                # completer = QCompleter(recom,self) #
+                # self.edit_length.setCompleter(completer)
+
+        except Exception as ex: print(f"find_buja함수에서 {ex}에러 발생")
     
     def totallist(self):
         global logx
@@ -520,11 +553,6 @@ class MainClass(QMainWindow, from_class):
         elif bolt == 1: #볼트가 있을때
             self.log.setItem(bolt_index,11,QtWidgets.QTableWidgetItem(str(bolt_num)))
     
-
-
-
-
-
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
     window = MainClass()

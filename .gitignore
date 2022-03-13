@@ -6,5 +6,7 @@ __pycache__/
 dspncalc_backup.ui
 
 #엑셀관련파일
-매출정보.csv
+!client.csv
+!부자재.csv
+*.csv
 *.xlsx
