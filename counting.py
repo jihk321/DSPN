@@ -28,7 +28,13 @@ def WritingDate():
     day = day.strftime("%m-%d")
     return day
     
-def excelling(num, name, data):
+def excelling(num, name, data,info):
+    info_column = ['주문번호','구분','거래처','현장','현장연락처','비고']
+    info_dict = {}
+    for i in range(len(info)):
+        info_dict[info_column[i]] = [info[i]]
+    data_info = pd.DataFrame(info_dict)
+
     if os.path.isfile(f"{name}.csv"):
         with open(f"{name}.csv",'a',encoding= 'utf-8-sig',newline='') as file_w:
             for i in range(0,num,1):
@@ -39,6 +45,9 @@ def excelling(num, name, data):
         # data.to_clipboard()
     else:
         data.to_csv(f"{name}.csv",index= False,encoding= 'utf-8-sig')
+        # with pd.ExcelWriter(f"{name}.xlsx") as writer : 
+        #     data.to_excel(writer, sheet_name='매출상세',index=False)
+        #     data_info.to_excel(writer, sheet_name='매출정보',index=False)
 
 
 # excelling()
@@ -72,7 +81,7 @@ def FindingClient(find_name): #거래처 찾기
         # print(f"{end - start:.5f} sec")
         return search_name[0:5]
 
-# FindingClient("주식")
+# FindingClient("")
 
 def findbuja(find_name,color): #부자재 찾기
     files = pd.read_csv("부자재.csv", sep=",", low_memory=False)

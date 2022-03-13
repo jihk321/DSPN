@@ -14,6 +14,18 @@ from coils import *
 from subplan import *
 
 from_class = uic.loadUiType("dspncalc.ui")[0]
+form_second = uic.loadUiType("subplan.ui")[0]
+
+class SubWindow(QDialog,form_second):
+
+    def __init__(self,parent) :
+        super(SubWindow, self).__init__(parent)
+        self.initUI()
+
+    def initUI(self) :
+        self.setupUi(self)
+        self.show()
+        
 
 class MainClass(QMainWindow, from_class):
     def __init__(self):
@@ -323,9 +335,20 @@ class MainClass(QMainWindow, from_class):
             df.loc[i] = table    
         df = df[['주문번호','작성일','거래처','거래처코드','구분','출고일','상품구분','품목','상세품목','판넬두께','품목2','규격','판넬색상','상판','하판','보드','규격2','구분2','순번','규격3','길이','수량','면적/중량','단위','비고','등급','단가참조(판넬)','단가참조(절곡)','단가참조(기타)','판매비용']]
         # print(df.columns)
-        df.fillna('') # NAN 데이터 공백으로 처리
-        excelling(logx,clientname,df)  #엑셀화  
-        
+        # df.fillna('') # NAN 데이터 공백으로 처리
+        data_info = self.NewOrder()
+
+        # df['거래처코드'] = '=IFERROR(VLOOKUP([@거래처],거래처[[거래처명]:[거래처코드2]],10,FALSE),"코드확인")'
+        # df['판넬두께'] = '=IFERROR(LEFT([@상세품목],FIND("T",[@상세품목],1)-1),"-")'
+        # df['판넬색상'] = '=IF(OR([@품목]="칼라코일",[@품목]="부자재",[@품목]="도어/창호",[@품목]="철자재"),"",(LEFT([@규격],5)))'
+        # df['색상'] = '=IFERROR(IF(OR([@품목]="부자재",[@품목]="칼라코일",[@품목]="도어/창호",[@품목]="철자재"),VLOOKUP([@품목2],CODE!N:O,2,FALSE),VLOOKUP([@품목]&[@상세품목],CODE!AB:AC,2,FALSE)),"-")'
+        # df['규격3'] = '=[@품목2]&" "&[@규격]&" "&[@상판]&" "&[@하판]&" "&[@보드]&" "&[@규격2]&" "&[@구분2]' 
+        # df['면적/중량'] = '=IFERROR(IF(OR([@품목]="부자재",[@품목]="도어/창호"),"-",[@수량]*[@[길이(mm)]]/1000),"-")'
+        # df['단위'] = '=IFERROR(IF(OR([@품목]="부자재",[@품목]="도어/창호"),VLOOKUP([@품목2],CODE!$N:$P,3,FALSE),VLOOKUP([@상세품목],CODE!N:P,3,FALSE)),"-")'
+        # df['단가참조(판넬)'] = '=IFERROR(IF([@품목]="강판",ROUNDUP((VLOOKUP([@상판]&VLOOKUP([@상세품목],생산원가!$F:$G,2,FALSE),생산원가!$H:$I,2,FALSE)*생산원가!$B$3)*VLOOKUP([@상세품목]&[@등급],생산원가!$F:$G,2,FALSE),-2)+VLOOKUP([@규격],생산원가!$A:$B,2,FALSE)+VLOOKUP([@상세품목],생산원가!$A:$B,2,FALSE),ROUNDUP((VLOOKUP([@상판]&VLOOKUP([@품목],생산원가!$F:$G,2,FALSE),생산원가!$H:$I,2,FALSE)*생산원가!$B$3+VLOOKUP([@하판]&VLOOKUP([@품목],생산원가!$F:$H,3,FALSE),생산원가!$H:$I,2,FALSE)*생산원가!$B$3+VLOOKUP([@보드],생산원가!$A:$C,3,FALSE)*[@판넬두께]/100+VLOOKUP([@품목],생산원가!$A:$B,2,FALSE))*VLOOKUP([@등급],생산원가!$A:$B,2,FALSE),-2)+VLOOKUP([@규격],생산원가!A:B,2,FALSE)),"-")'
+        # df['단가참조(절곡)'] = '=IFERROR(INDEX(후레싱단가9[[대리점]:[소매]],MATCH([@품목2]&[@규격],후레싱단가9[품목]&후레싱단가9[규격],0),[@등급]),"-")'
+        # df['단가참조(기타)'] = '=IFERROR(INDEX(단가표[[1 ]:[5 ]],MATCH([@품목2]&[@규격],단가표[품목]&단가표[규격],0),[@등급]),"-")'
+        excelling(logx,clientname,df,data_info)  #엑셀화  
         self.error.append("엑셀 저장 완료")   
         # print(aemp[1]) 
 
@@ -347,6 +370,7 @@ class MainClass(QMainWindow, from_class):
         self.edit_bottomcoil.setText(str(bot))
 
     def NewOrder(self): #새로만들기 버튼 이벤트 
+        global logx
         write_content = []
         order_number = self.edit_order_num.text() #주문번호
         proudct_type = self.comboBox_type.currentText() #구분
@@ -363,9 +387,11 @@ class MainClass(QMainWindow, from_class):
         with open('매출정보.csv','a', encoding= 'utf-8-sig',newline='') as f_object:
             writer_object = writer(f_object)
             writer_object.writerow(write_content)
-            f_object.close()
+            # f_object.close()
         self.today() # 주문번호 업데이트
+        logx = 0 # 초기화 
         self.allclear() #모든 항목 비우기 
+        return write_num
 
     def renaming(self): 
         self.edit_price.clear()
@@ -406,7 +432,7 @@ class MainClass(QMainWindow, from_class):
         self.log.clear()
 
     def showplan(self):
-        # sub = SubWindow()
+        sub = SubWindow(self)
         # sub.show()
         pass
     
@@ -433,7 +459,7 @@ class MainClass(QMainWindow, from_class):
                 print(recom_buja)
                 completer_buja = QCompleter(recom_buja,self) #
                 self.edit_length.setCompleter(completer_buja)
-
+                
             except Exception as ex: print(f"find_buja함수에서 {ex}에러 발생")
     
     def totallist(self):

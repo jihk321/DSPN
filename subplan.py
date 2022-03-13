@@ -8,11 +8,12 @@ from PyQt5 import uic
 
 class Recommed(QWidget):
 
-    def __init__(self,name):
+    def __init__(self,name,color):
         super().__init__()
-
         self.name = name 
-        re = FindingClient(self.name)
+        self.color = color
+        # self.name = name 
+        re = findbuja(self.name,self.color)
 
         self.lineEdit = QLineEdit() #라인 에딧 생성
         
@@ -21,9 +22,8 @@ class Recommed(QWidget):
 
         box = QVBoxLayout()
         box.addWidget(self.lineEdit)
-        self.setLayout(box)
-        self.show()
-
+        # self.setLayout(box)
+        # self.show()
 
 # form_second = uic.loadUiType("subplan.ui")[0]
 
