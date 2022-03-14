@@ -58,7 +58,7 @@ def FindingClient(find_name): #거래처 찾기
         files = pd.read_csv("client.csv",header=0,sep=",",low_memory=False)
         # files.dropna(inplace = True) # 빈값 버리기
         # search_num = (files['거래처명'].str.find(find_name))
-        search_num = files[files['거래처명'].str.contains(find_name,na=False)]
+        search_num = files[files['거래처명'].str.contains(find_name,na=False,regex=True)]
         a = search_num.index.tolist
         
         search_name = search_num['거래처명'].values
@@ -79,17 +79,17 @@ def FindingClient(find_name): #거래처 찾기
         # print(search_name[0:5])
         # end = time.time()
         # print(f"{end - start:.5f} sec")
-        return search_name[0:5]
+        return search_name
 
 # FindingClient("")
 
 def findbuja(find_name,color): #부자재 찾기
     files = pd.read_csv("부자재.csv", sep=",", low_memory=False)
-    search_num = files[files['품목'].str.contains(find_name,na=False)]
+    search_num = files[files['품목'].str.contains(find_name,na=False,regex=True)]
         
-    search_name = search_num[search_num['규격'].str.contains(color,na=False)]
+    search_name = search_num[search_num['규격'].str.contains(color,na=False,regex=True)]
     re_name = search_name['규격'].values
-    return re_name[0:5]
+    return re_name
 
 # findbuja("2단후레슁","링클브라운")
 

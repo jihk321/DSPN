@@ -327,13 +327,17 @@ class MainClass(QMainWindow, from_class):
             if item_type <= 5:
                 color_now = self.comboBox_Color.currentText()
                 top_now = float(self.edit_topcoil.text())
-                if color_now == "밤색" : self.edit_topcoil.setText(str(0.4))
-                elif color_now == "포스맥원판" or color_now == "갈바" :
-                    if top_now < 0.45 :  self.edit_topcoil.setText(str(0.45))
-                elif color_now == "티타늄실버" :
-                    if top_now < 0.5 : self.edit_topcoil.setText(str(0.5))
-                elif color_now == "아연" :
-                    if top_now < 1.0 : self.edit_topcoil.setText(str(1.0))
+                color_check = search_width(color_now)
+
+                if float(top_now) < float(color_check) :
+                    self.edit_topcoil.setText(color_check[0])
+                # if color_now == "밤색" : self.edit_topcoil.setText(str(0.4))
+                # elif color_now == "포스맥원판" or color_now == "갈바" :
+                #     if top_now < 0.45 :  self.edit_topcoil.setText(str(0.45))
+                # elif color_now == "티타늄실버" :
+                #     if top_now < 0.5 : self.edit_topcoil.setText(str(0.5))
+                # elif color_now == "아연" :
+                #     if top_now < 1.0 : self.edit_topcoil.setText(str(1.0))
 
         except Exception as ex: 
             print(f"errorcode함수에서 {ex}에러 발생")
@@ -527,13 +531,25 @@ class MainClass(QMainWindow, from_class):
         
         self.comboBox_sort.clear()
         for num in range(0,total_num,1) :
-            # total_color.append(total_df['색상'][num])
-            total_color = str(total_df['색상'][num])
-            total_coil = str(total_df['코일(T)'][num])
-            if total_coil == "0.35": self.comboBox_sort.addItem(total_color)
-            elif total_coil == "0.37" or total_coil == "0.4" : self.comboBox_sort.addItem(total_color+"040")
-            elif total_coil == "0.45" : self.comboBox_sort.addItem(total_color+"045")
-            elif total_coil == "0.5" : self.comboBox_sort.addItem(total_color+"050")
+            try :
+                color_etc = {'아이보리' : ['한면은회','한면백색','양면은회','양면백색','아이보리'],
+                '메탈 1.0*1.0' : '라인메탈 1.0*1.0'}
+                # total_color.append(total_df['색상'][num])
+                total_color = str(total_df['색상'][num])
+
+                total_coil = str(total_df['코일(T)'][num])
+
+                mini = search_width(total_color)
+
+                if float(total_coil) > float(mini) :
+                    self.comboBox_sort.addItem(total_color + total_coil + "0")
+                else : self.comboBox_sort.addItem(total_color)
+
+                # if total_coil == "0.35": self.comboBox_sort.addItem(total_color)
+                # elif total_coil == "0.37" or total_coil == "0.4" : self.comboBox_sort.addItem(total_color+"040")
+                # elif total_coil == "0.45" : self.comboBox_sort.addItem(total_color+"045")
+                # elif total_coil == "0.5" : self.comboBox_sort.addItem(total_color+"050")
+            except Exception as ex : print(f"totallist함수에서 {ex}에러 발생")
 
     
     def ggachibolt(self,sort,clientnum):
