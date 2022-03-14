@@ -1878,22 +1878,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>comboBox_Color</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>First</receiver>
-   <slot>price()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>380</x>
-     <y>235</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>396</x>
-     <y>743</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>edit_number</sender>
    <signal>returnPressed()</signal>
    <receiver>First</receiver>
@@ -2021,6 +2005,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>comboBox_Color</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>First</receiver>
+   <slot>colorchange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>352</x>
+     <y>207</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>840</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>calc()</slot>
@@ -2039,5 +2039,6 @@
   <slot>showplan()</slot>
   <slot>find_client()</slot>
   <slot>find_buja()</slot>
+  <slot>colorchange()</slot>
  </slots>
 </ui>

@@ -326,7 +326,7 @@ class MainClass(QMainWindow, from_class):
         try:
             if item_type <= 5:
                 color_now = self.comboBox_Color.currentText()
-                top_now = float(self.edit_topcoil.text())
+                top_now = self.edit_topcoil.text()
                 color_check = search_width(color_now)
 
                 if float(top_now) < float(color_check) :
@@ -352,6 +352,10 @@ class MainClass(QMainWindow, from_class):
             return False
         if self.error.toPlainText() == '' : 
             return True
+    def colorchange(self) :
+        # self.chagetype()
+        self.errorcode()
+        self.price()
 
     def excel(self):
         # make_item(logx)
@@ -394,7 +398,7 @@ class MainClass(QMainWindow, from_class):
             self.chagecoil(0.5,0.5)
             self.price()
         elif self.doublesize.isChecked() == False:
-            # self.chagetype()
+            self.chagetype()
             self.price()
         if self.onecolor.isChecked() or self.onecolor_2.isChecked() or self.onecolor_3.isChecked() or self.onecolor_4.isChecked(): self.price()
         if self.paper.isChecked() : 
@@ -441,12 +445,14 @@ class MainClass(QMainWindow, from_class):
         #         print("부자재가 아님")
         item_name = renamebuja(item_name)
         self.edit_product2.setText(item_name)
-        # if no_length in item_name : self.edit_number.setFocus() # 갯수로 포커스 
-        # else : self.edit_length.setFocus() # 길이로 포커스 
+        if no_length in [item_name] : self.edit_number.setFocus() # 갯수로 포커스 
+        else : 
+            self.edit_length.setFocus() # 길이로 포커스 
+            self.find_buja()
 
     def samecolor(self): #추천색상(T수) 체크박스
         color = self.comboBox_sort.currentText()
-        color = "*"+ color
+        # color = "*"+ color
         self.edit_length.insert(color)
         self.checkBox_same.setChecked(False)
 
@@ -536,13 +542,14 @@ class MainClass(QMainWindow, from_class):
                 '메탈 1.0*1.0' : '라인메탈 1.0*1.0'}
                 # total_color.append(total_df['색상'][num])
                 total_color = str(total_df['색상'][num])
-
+                
                 total_coil = str(total_df['코일(T)'][num])
 
                 mini = search_width(total_color)
 
                 if float(total_coil) > float(mini) :
-                    self.comboBox_sort.addItem(total_color + total_coil + "0")
+                    total_coil = total_coil.replace(".","")
+                    self.comboBox_sort.addItem(f"{total_color}{total_coil}0")
                 else : self.comboBox_sort.addItem(total_color)
 
                 # if total_coil == "0.35": self.comboBox_sort.addItem(total_color)
