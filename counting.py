@@ -92,3 +92,13 @@ def findbuja(find_name,color): #부자재 찾기
     return re_name[0:5]
 
 # findbuja("2단후레슁","링클브라운")
+
+def numberic(item_name,item_type,item_num): 
+    if item_num > 25 :
+        if item_name == '실리콘' : # 25EA = 1BOX
+            num = item_name / 25 
+            return num
+        elif item_name =='볼트' : 
+            # if item_type == 
+            pass
+
