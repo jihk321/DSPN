@@ -1367,8 +1367,8 @@
     <widget class="QCheckBox" name="colorsort">
      <property name="geometry">
       <rect>
-       <x>250</x>
-       <y>120</y>
+       <x>590</x>
+       <y>10</y>
        <width>81</width>
        <height>16</height>
       </rect>

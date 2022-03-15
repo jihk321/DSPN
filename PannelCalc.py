@@ -101,7 +101,7 @@ CoilWidth_index = ['벽체', '지붕', '벽체(내화)', 'V-45(내화)', '지붕
 CoilWidth_columns = ['상판폭', '하판폭']
 CoilWidth = pd.DataFrame(CoilWidth_Value, index=CoilWidth_index, columns=CoilWidth_columns)
 
-# print(CoilWidth['상판폭']['V-45(내화)'])
+# print(CoilWidth['상판폭']['RP1'])
 CoilThick_Value = {
     "두께": ['0.4', '0.5', '0.35', '0.5', '0.5', '0.5', '0.45', '0.45', '0.45', '0.5', '0.4', '0.5', '0.4'],
     "폭": ['1219', '1150', '1040', '1219', '1040', '1070', '1070', '1219', '914', '607', '607', '518', '518'],
@@ -120,7 +120,8 @@ CoilThick = pd.DataFrame(CoilThick_Value, index=CoilThick_index, columns=CoilThi
 EtcPrice = {'징크판넬': '850', '지붕': '600', '메탈판넬': '850', '사이딩': '850', '벽체': '600', '외벽판넬': '600', 'V250': '0',
             'V115': '0', 'OL250': '0', 'OL330': '0', 'V250(PF)': '700', 'V115(PF)': '900', 'OL250(PF)': '900','OL330(PF)':'900',
             '보급징크960': '300', '보급징크720': '300', '보급징크960(PF)': '1300', '보급징크720(PF)': '1300', '리얼징크445': '0',
-            '리얼징크355': '0', '팀버패널': '300', '듀얼징크': '0', 'V-45(A)': '600'}
+            '리얼징크355': '0', '팀버패널': '300', '듀얼징크': '0', 'V-45(A)': '600','RP1' : '0','RP3' : '0','V-45(일반)' : '0',
+            '징크330' : '0', '세라믹판넬' : '0', '노출콘' : '0'}
 # PriceRate = {'관계사':'1.15','0':'1.177','1':'1.25','2':'1.3','3':'1.35','4':'1.4'}
 
 Board_Price = {'일반': '2400', '난연': '4700', '준불연': '4700', '비난연가등급': '5000', '비난연020': '5000', '비난연015': '3750'}  # 보드 단가
@@ -234,33 +235,34 @@ def boardcalc(grade, size):
     price = ((g_price) * int(size)) / 100
     return price
 
-
 def coilpricecalc(name, color, top, bot, board, rate):  # 품목명,색상,상판폭,하판폭,보드단가,판매요율
     global coilprice
     n_type = ptype(name)
-    # try:
-    if top == 0.37 : top = 0.4  # 0.37은 0.4로 계산
-    width_top = CoilWidth['상판폭'][name]  # 상판폭 검색
-    width_bot = CoilWidth['하판폭'][name]  # 하판폭 검색
-    search_width = CoilThick['폭'] == str(width_top)
-    search_width2 = CoilThick['폭'] == str(width_bot)
-    search_top = CoilThick['두께'] == str(top)
-    search_bot = CoilThick['두께'] == str(bot)
-    gravity_top = CoilThick[search_width & search_top]['단중'].values  # 상판 단중값
-    gravity_bot = CoilThick[search_width2 & search_bot]['단중'].values  # 하판 단중값
-    price_top = float(gravity_top) * (coilprice)  # 상판 가격
-    price_etc = int(etcprice(name))  # 기타비용
-    price_rate = clientrate(name, rate)  # 판매요율
-    price_color = coilcolor2(color)  # 색상 가격
-    if n_type < 5:  # 판넬 타입
-        price_bot = float(gravity_bot) * (coilprice)  # 하판 가격
-        price = (price_top + price_bot + board + price_etc) * price_rate + price_color
-        print(f"판매 요율 : {price_rate} /상판가격 :{price_top} / 하판가격 : {price_bot} /보드 비용: {board}/ / 기타비용 :{price_etc} / 색상 값 : {price_color} / 총 가격 : {price}")
-    elif n_type == 5:
-        price = (price_top *price_rate ) + price_color+price_etc
-        print(f"상판가격{price_top} 기타가격{price_etc} 판매요율{price_rate} 색상값{price_color}")
-    price = tenup(price)
-    return int(price)
+    try:
+        if top == 0.37 : top = 0.4  # 0.37은 0.4로 계산
+        width_top = CoilWidth['상판폭'][name]  # 상판폭 검색
+        width_bot = CoilWidth['하판폭'][name]  # 하판폭 검색
+        search_width = CoilThick['폭'] == str(width_top)
+        search_width2 = CoilThick['폭'] == str(width_bot)
+        search_top = CoilThick['두께'] == str(top)
+        search_bot = CoilThick['두께'] == str(bot)
+        gravity_top = CoilThick[search_width & search_top]['단중'].values  # 상판 단중값
+        gravity_bot = CoilThick[search_width2 & search_bot]['단중'].values  # 하판 단중값
+        price_top = float(gravity_top) * (coilprice)  # 상판 가격
+        price_etc = int(etcprice(name))  # 기타비용
+        price_rate = clientrate(name, rate)  # 판매요율
+        price_color = coilcolor2(color)  # 색상 가격
+        print(f"상판폭 {width_top}, 하판폭{width_bot}, ")
+        if n_type < 5:  # 판넬 타입
+            price_bot = float(gravity_bot) * (coilprice)  # 하판 가격
+            price = (price_top + price_bot + board + price_etc) * price_rate + price_color
+            print(f"판매 요율 : {price_rate} /상판가격 :{price_top} / 하판가격 : {price_bot} /보드 비용: {board}/ / 기타비용 :{price_etc} / 색상 값 : {price_color} / 총 가격 : {price}")
+        elif n_type == 5:
+            price = (price_top *price_rate ) + price_color+price_etc
+            print(f"상판가격{price_top} 기타가격{price_etc} 판매요율{price_rate} 색상값{price_color}")
+        price = tenup(price)
+        return int(price)
+    except Exception as ex: print(f"find_client함수에서 {ex}에러 발생") 
 
 def ptype(name):
     Item_Type = 0  # 제품 분류  0 일반벽체, 1 지붕 , 2 외벽, 3 징크, 4 사이딩, 5 강판 , 6 부자재(상품), 7 부자재(제품), 8 도어/창호
