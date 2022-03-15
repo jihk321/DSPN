@@ -256,6 +256,7 @@ class MainClass(QMainWindow, from_class):
         try : 
             self.errorcode()
             itemname = self.comboBox_pannel.currentText()#상품 종류
+            if itemname == '지붕330' : itemname = '지붕'
             color = self.comboBox_Color.currentText() # 색깔
             item_type = ptype(itemname)
             top_width = self.edit_topcoil.text() # 상판
@@ -301,7 +302,8 @@ class MainClass(QMainWindow, from_class):
             numbers = self.edit_number.text()#수량 
             product2 = self.edit_product2.text() #품목2
             if product == "메탈판넬": 
-                stardard = self.comboBox_metal.currentText()
+                # stardard = self.comboBox_metal.currentText() # 필요없는부분임
+                stardard = ""
                 length = float(length)
                 length = str(hundup(length))
             else : stardard = self.comboBox_stand.currentText()  #규격2
@@ -491,6 +493,7 @@ class MainClass(QMainWindow, from_class):
             self.find_buja()
 
     def samecolor(self): #추천색상(T수) 체크박스
+        self.edit_length.clear()
         color = self.comboBox_sort.currentText()
         # color = "*"+ color
         self.edit_length.insert(color)
