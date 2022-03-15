@@ -156,7 +156,7 @@ class MainClass(QMainWindow, from_class):
             self.checkBox_same.setVisible(True)
 
         # self.price()
-        self.PF.setChecked(False)
+        # self.PF.setChecked(False)
         self.colorsort.setChecked(False)
         self.doublesize.setChecked(False)
         
@@ -197,7 +197,7 @@ class MainClass(QMainWindow, from_class):
             self.today()
             
 
-    def price(self): # 단가 계산하는 함수
+    def price222(self): # 단가 계산하는 함수
         try:
             self.errorcode()
             itemname = self.comboBox_pannel.currentText()#상품 종류
@@ -229,7 +229,7 @@ class MainClass(QMainWindow, from_class):
                 self.error.append(str(pricetext))
                 # print("기본 단가 : {price}  거래처 별 추가 단가 {price1} : 양면 05T 추가금 : {price2} 코일 색 추가금 {price3}",price,price1,price2,price3)
                 price = price + price1 + price2 + price3 + price4 
-            if type == 5 : 
+            elif type == 5 : 
                 if self.edit_topcoil.text() != "":
                     top = self.edit_topcoil.text()
                     if self.C1.isChecked() : rate = 1  
@@ -244,13 +244,44 @@ class MainClass(QMainWindow, from_class):
                     # self.error.append(str(pricetext))
                 else: return 
             self.edit_price.setText(str(price))
+
             if type > 5 : # 부자재, 도어/창호
                 self.edit_price.clear()
-
 
         except Exception as ex: 
             print(f"price함수에서 {ex}에러 발생")
             self.edit_price.clear()
+
+    def price(self) : 
+        try : 
+            self.errorcode()
+            itemname = self.comboBox_pannel.currentText()#상품 종류
+            color = self.comboBox_Color.currentText() # 색깔
+            item_type = ptype(itemname)
+            top_width = self.edit_topcoil.text() # 상판
+
+            if self.C1.isChecked() : rate = 1  
+            elif self.C2.isChecked() : rate = 2
+            elif self.C3.isChecked() : rate = 3
+            elif self.C4.isChecked() : rate = 4
+
+            if item_type < 5 :
+                grade = self.comboBox_grade.currentText()#단열제 종류
+                size = self.comboBox_size.currentText()#T수 
+                bot_width = self.edit_bottomcoil.text() #하판
+                size = size.replace("T","")
+                # print(f"제품 {itemname} 단열제 {grade} 사이즈 {size} 색 {color} 타입 {item_type} 상판 {top_width} 하판 {bot_width}")
+                board_price = boardcalc(grade,size)
+                price = coilpricecalc(itemname,color,top_width,bot_width,board_price,rate)
+                if self.onecolor.isChecked() or self.onecolor_2.isChecked() : price = price +200
+                if self.onecolor_3.isChecked() or self.onecolor_4.isChecked() : price = price+400
+                self.edit_price.setText(str(price))
+            elif item_type == 5 :
+                if self.PF.isChecked() : itemname = itemname + "(PF)"
+                price = coilpricecalc(itemname,color,top_width,0,0,rate)
+                print(price)
+                self.edit_price.setText(str(price))
+        except Exception as ex :  print(f"price2함수에서 {ex}에러 발생") 
 
     def calc(self): # TableWidget에 적기
         if self.errorcode():

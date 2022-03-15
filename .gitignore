@@ -7,8 +7,11 @@ dist/
 #백업파일 제외
 dspncalc_backup.ui
 
+*.spec
+
 #엑셀관련파일
 !client.csv
 !부자재.csv
 *.csv
 *.xlsx
+*.xlsb

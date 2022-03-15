@@ -159,7 +159,7 @@ def coilcolor(color, type):  # 판넬
 def coilcolor2(color):  # 강판
     # wrinkle = ['링클브라운','링클진회','링클검정','링클쿠퍼']
     color_type = colors[color]
-
+    
     if color_type == '단색':
         colorprice = 0
         if color == '백색엠보' : colorprice = 1000
@@ -172,7 +172,7 @@ def coilcolor2(color):  # 강판
     elif color_type == '스톤' :
         colorprice = 1800
         if color == '링클브라운' : colorprice = 1000
-    return colorprice
+    return int(colorprice)
 
 
 def etcprice(name):
@@ -259,8 +259,10 @@ def coilpricecalc(name, color, top, bot, board, rate):  # 품목명,색상,상�
     elif n_type == 5:
         price = (price_top + price_etc) * price_rate + price_color
     price = tenup(price)
-    # print(price)
+    print(price)
     return int(price)
+
+
 
 def ptype(name):
     Item_Type = 0  # 제품 분류  0 일반벽체, 1 지붕 , 2 외벽, 3 징크, 4 사이딩, 5 강판 , 6 부자재(상품), 7 부자재(제품), 8 도어/창호

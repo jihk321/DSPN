@@ -2021,6 +2021,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>C1</sender>
+   <signal>clicked()</signal>
+   <receiver>First</receiver>
+   <slot>price()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>45</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>164</x>
+     <y>795</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>C2</sender>
+   <signal>clicked()</signal>
+   <receiver>First</receiver>
+   <slot>price()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>105</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>C3</sender>
+   <signal>clicked()</signal>
+   <receiver>First</receiver>
+   <slot>price()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>175</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>C4</sender>
+   <signal>clicked()</signal>
+   <receiver>First</receiver>
+   <slot>price()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>225</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>calc()</slot>
