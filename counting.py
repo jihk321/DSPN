@@ -44,7 +44,7 @@ def excelling(num, name, data,info):
                 writer_object.writerow(a)
         # data.to_clipboard()
     else:
-        data.to_csv(f"{name}.csv",index= False,encoding= 'utf-8-sig')
+        data.to_csv(f"{name}.csv",index= False,encoding= 'utf-8-sig',sep=',')
         # with pd.ExcelWriter(f"{name}.xlsx") as writer : 
         #     data.to_excel(writer, sheet_name='매출상세',index=False)
         #     data_info.to_excel(writer, sheet_name='매출정보',index=False)

@@ -265,23 +265,26 @@ class MainClass(QMainWindow, from_class):
             elif self.C3.isChecked() : rate = 3
             elif self.C4.isChecked() : rate = 4
 
+            price_etc = 0
             if item_type < 5 :
                 grade = self.comboBox_grade.currentText()#단열제 종류
                 size = self.comboBox_size.currentText()#T수 
                 bot_width = self.edit_bottomcoil.text() #하판
                 size = size.replace("T","")
+                if self.onecolor.isChecked() or self.onecolor_2.isChecked() : price_etc = 200
+                elif self.onecolor_3.isChecked() or self.onecolor_4.isChecked() : price_etc = 400
                 # print(f"제품 {itemname} 단열제 {grade} 사이즈 {size} 색 {color} 타입 {item_type} 상판 {top_width} 하판 {bot_width}")
                 board_price = boardcalc(grade,size)
                 price = coilpricecalc(itemname,color,top_width,bot_width,board_price,rate)
-                if self.onecolor.isChecked() or self.onecolor_2.isChecked() : price = price +200
-                if self.onecolor_3.isChecked() or self.onecolor_4.isChecked() : price = price+400
+                price = price + price_etc
+                
                 self.edit_price.setText(str(price))
             elif item_type == 5 :
                 if self.PF.isChecked() : itemname = itemname + "(PF)"
                 price = coilpricecalc(itemname,color,top_width,0,0,rate)
                 print(price)
                 self.edit_price.setText(str(price))
-        except Exception as ex :  print(f"price2함수에서 {ex}에러 발생") 
+        except Exception as ex :  print(f"New Price함수에서 {ex}에러 발생") 
 
     def calc(self): # TableWidget에 적기
         if self.errorcode():
@@ -384,7 +387,12 @@ class MainClass(QMainWindow, from_class):
         if self.error.toPlainText() == '' : 
             return True
     def colorchange(self) :
-        # self.chagetype()
+        item_name = self.comboBox_pannel.currentText()
+        item_type = ptype(item_name)
+        if item_type == 0 : self.chagecoil(0.35,0.35)  # 벽체 
+        elif item_type <= 2 : self.chagecoil(0.37,0.35)  # 지붕,외병
+        elif item_type == 3 : self.chagecoil(0.5,0.35)  # 징크,라인메탈
+        elif item_type == 4 : self.chagecoil(0.4,0.35) # 사이딩
         self.errorcode()
         self.price()
 
@@ -435,6 +443,7 @@ class MainClass(QMainWindow, from_class):
         if self.paper.isChecked() : 
             self.edit_address_2.setText("복합자재 필요")
             self.paper.setChecked(False)
+        if self.PF.isChecked() == True : self.price()
         
     def chagecoil(self,top,bot):
         self.edit_topcoil.setText(str(top))
@@ -467,7 +476,7 @@ class MainClass(QMainWindow, from_class):
     def renaming(self): 
         self.edit_price.clear()
         door_type = ['방화문','창호','행거도어']
-        no_length =['PVC까치발','캐노피삼각대']
+        no_length =['PVC까치발','캐노피삼각대','돔와샤']
         item_name = self.edit_product2.text()
         # print(type(item_name))
         # if door_type in list(item_name) :
@@ -570,7 +579,7 @@ class MainClass(QMainWindow, from_class):
         for num in range(0,total_num,1) :
             try :
                 color_etc = {'아이보리' : ['한면은회','한면백색','양면은회','양면백색','아이보리'],
-                '메탈 1.0*1.0' : '라인메탈 1.0*1.0'}
+                '메탈 1.0*1.0' : '헤어은회'}
                 # total_color.append(total_df['색상'][num])
                 total_color = str(total_df['색상'][num])
                 

@@ -1563,12 +1563,12 @@
      </property>
      <item>
       <property name="text">
-       <string>1000*1000</string>
+       <string>1.0*1.0</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>1000*500</string>
+       <string>1.0*0.5</string>
       </property>
      </item>
     </widget>
@@ -2082,6 +2082,86 @@
     <hint type="destinationlabel">
      <x>380</x>
      <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>onecolor</sender>
+   <signal>clicked()</signal>
+   <receiver>First</receiver>
+   <slot>price()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>547</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>onecolor_2</sender>
+   <signal>clicked()</signal>
+   <receiver>First</receiver>
+   <slot>price()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>547</x>
+     <y>284</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>onecolor_3</sender>
+   <signal>clicked()</signal>
+   <receiver>First</receiver>
+   <slot>price()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>547</x>
+     <y>316</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>onecolor_4</sender>
+   <signal>clicked()</signal>
+   <receiver>First</receiver>
+   <slot>price()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>547</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>edit_topcoil</sender>
+   <signal>returnPressed()</signal>
+   <receiver>First</receiver>
+   <slot>price()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>30</x>
+     <y>288</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>70</x>
+     <y>753</y>
     </hint>
    </hints>
   </connection>
